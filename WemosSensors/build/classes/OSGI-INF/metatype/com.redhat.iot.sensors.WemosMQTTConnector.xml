@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetaData xmlns="http://www.osgi.org/xmlns/metatype/v1.2.0" localization="en_us">
+    <OCD id="com.redhat.iot.sensors.WemosMQTTConnector"
+         name="Wemos - MQTT"
+         description="MQTT cofig for MQTT transport by Wemos Sensors">
+         
+        <Icon resource="OSGI-INF/wemos-iot.png" size="32"/>
+        <AD id="scan_enable"
+            name="scan_enable"
+            type="Boolean"
+            cardinality="0"
+            required="true"
+            default="false"
+            description="Enable subscription to MQTT Broker" />
+
+        <AD id="BrokerURL"
+            name="Broker URL"
+            type="String"
+            cardinality="0"
+            required="true"
+            default="mqtt://localhost:1883"
+            description="Broker URL for the connection"/>
+
+        <AD id="UserName"
+            name="User Name"
+            type="String"
+            cardinality="0"
+            required="true"
+            default="admin"
+            description="Username for the connection"/>
+
+        <AD id="Password"
+            name="Password"
+            type="Password"
+            cardinality="0"
+            required="true"
+            default="admin"
+            description="Password for the connection"/>
+
+        <AD id="SubscribingTopic"
+            name="SubscribingTopic"
+            type="String"
+            cardinality="0"
+            required="true"
+            default="incoming"
+            description="Incoming Topic."/>
+            
+
+        <AD id="PublishingTopic"
+            name="PublishingTopic"
+            type="String"
+            cardinality="0"
+            required="true"
+            default="outgoing"
+            description="Outgoing Topic"/>
+              
+    </OCD>
+
+    <Designate pid="com.redhat.iot.sensors.WemosMQTTConnector">
+        <Object ocdref="com.redhat.iot.sensors.WemosMQTTConnector"/>
+    </Designate>
+</MetaData>

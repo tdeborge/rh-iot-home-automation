@@ -1,0 +1,62 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.redhat.iot</groupId>
+		<artifactId>HomeAutomation</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>MQTTSandbox</artifactId>
+	<properties>
+		<slf4j.version>1.6.6</slf4j.version>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven-bundle-plugin.version>3.0.1</maven-bundle-plugin.version>
+		<maven.compiler.target>1.7</maven.compiler.target>
+	</properties>
+	<repositories>
+		<repository>
+			<id>Eclipse Paho Repo</id>
+			<url>https://repo.eclipse.org/content/repositories/paho-releases/</url>
+		</repository>
+	</repositories>
+	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.paho</groupId>
+			<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<!-- NOTE: We don't need a groupId specification because the group is 
+					org.apache.maven.plugins ...which is assumed by default. -->
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>assemble-jar-with-dependencies</id>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<phase>package</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

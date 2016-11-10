@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetaData xmlns="http://www.osgi.org/xmlns/metatype/v1.2.0"
+	localization="en_us">
+	<OCD id="com.redhat.iot.sensors.WemosMQTTConnector" name="Wemos - MQTT"
+		description="MQTT cofig for MQTT transport by Wemos Sensors">
+
+		<Icon resource="OSGI-INF/wemos-iot.png" size="32" />
+		<AD id="comms_enabled" 
+			name="Enable Wemos Communications" 
+			type="Boolean" 
+			cardinality="0"
+			required="true" 
+			default="false" 
+			description="Enable Wemos subscriptions" />
+
+		<AD id="BrokerURL" 
+			name="Broker URL" 
+			type="String" 
+			cardinality="0"
+			required="true" 
+			default="mqtt://mbpTimDeBorger.local:1883" 
+			description="Broker URL for the connection" />
+
+		<AD id="UserName" 
+			name="User Name" 
+			type="String" 
+			cardinality="0"
+			required="true" 
+			default="admin" 
+			description="Username for the connection" />
+
+		<AD id="Password" 
+			name="Password" 
+			type="Password" 
+			cardinality="0"
+			required="true" 
+			default="admin" 
+			description="Password for the connection" />
+
+		<AD id="SubscribingTopic" 
+			name="SubscribingTopic" 
+			type="String"
+			cardinality="0" 
+			required="true" 
+			default="Wemos.SmartHome" 
+			description="Incoming Topic." />
+
+		<AD id="PublishingTopic" 
+			name="PublishingTopic" 
+			type="String"
+			cardinality="0" 
+			required="true" 
+			default="Wemos.SmartHome" 
+			description="Outgoing Topic" />
+
+		<AD id="cloudService" 
+			name="Cloud Service PID"
+			description="The service PID of the Cloud Service to use" 
+			type="String"
+			cardinality="1" 
+			required="false" 
+			default="org.eclipse.kura.cloud.CloudService" />
+				
+		<AD id="smartlight" 
+			name="Enable Smart Light" 
+			type="Boolean" 
+			cardinality="0"
+			required="true" 
+			default="false" 
+			description="Smart Light Data" />
+	</OCD>
+
+	<Designate pid="com.redhat.iot.sensors.WemosMQTTConnector">
+		<Object ocdref="com.redhat.iot.sensors.WemosMQTTConnector" />
+	</Designate>
+</MetaData>
