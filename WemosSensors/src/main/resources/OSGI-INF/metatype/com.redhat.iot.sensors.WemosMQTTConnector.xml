@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MetaData xmlns="http://www.osgi.org/xmlns/metatype/v1.2.0"
 	localization="en_us">
-	<OCD id="com.redhat.iot.sensors.WemosMQTTConnector" name="Wemos - MQTT"
-		description="MQTT cofig for MQTT transport by Wemos Sensors">
+	<OCD id="com.redhat.iot.sensors.WemosMQTTConnector" 
+		 name="Wemos - MQTT"
+		 description="MQTT cofig for MQTT transport by Wemos Sensors">
 
-		<Icon resource="OSGI-INF/wemos-iot.png" size="32" />
+<Icon resource="OSGI-INF/wemos-iot.png" size="32" />
 		<AD id="comms_enabled" 
 			name="Enable Wemos Communications" 
 			type="Boolean" 
@@ -12,56 +13,56 @@
 			required="true" 
 			default="false" 
 			description="Enable Wemos subscriptions" />
-
-		<AD id="BrokerURL" 
+<AD id="BrokerURL" 
 			name="Broker URL" 
 			type="String" 
 			cardinality="0"
 			required="true" 
 			default="mqtt://mbpTimDeBorger.local:1883" 
 			description="Broker URL for the connection" />
-
-		<AD id="UserName" 
+<AD id="UserName" 
 			name="User Name" 
 			type="String" 
 			cardinality="0"
 			required="true" 
 			default="admin" 
 			description="Username for the connection" />
-
-		<AD id="Password" 
+<AD id="Password" 
 			name="Password" 
 			type="Password" 
 			cardinality="0"
 			required="true" 
 			default="admin" 
 			description="Password for the connection" />
-
-		<AD id="SubscribingTopic" 
-			name="SubscribingTopic" 
+<AD id="clientId" 
+			name="Client ID" 
+			type="String" 
+			cardinality="0"
+			required="true" 
+			default="kura-gw-01" 
+			description="Client ID for MQTT Connection" />
+<AD id="SubscribingTopic" 
+			name="Sub Prefix" 
 			type="String"
 			cardinality="0" 
 			required="true" 
 			default="Wemos.SmartHome" 
-			description="Incoming Topic." />
-
-		<AD id="PublishingTopic" 
-			name="PublishingTopic" 
+			description="Incoming Topic Prefix." />
+<AD id="PublishingTopic" 
+			name="Pub Prefix" 
 			type="String"
 			cardinality="0" 
 			required="true" 
 			default="Wemos.SmartHome" 
-			description="Outgoing Topic" />
-
-		<AD id="cloudService" 
+			description="Outgoing Topic Prefix"/>
+<AD id="cloudService" 
 			name="Cloud Service PID"
 			description="The service PID of the Cloud Service to use" 
 			type="String"
 			cardinality="1" 
 			required="false" 
 			default="org.eclipse.kura.cloud.CloudService" />
-				
-		<AD id="smartlight" 
+<AD id="smartlight" 
 			name="Enable Smart Light" 
 			type="Boolean" 
 			cardinality="0"
@@ -69,7 +70,6 @@
 			default="false" 
 			description="Smart Light Data" />
 	</OCD>
-
 	<Designate pid="com.redhat.iot.sensors.WemosMQTTConnector">
 		<Object ocdref="com.redhat.iot.sensors.WemosMQTTConnector" />
 	</Designate>

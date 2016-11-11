@@ -9,5 +9,6 @@
   <modules>
   	<module>WemosSensors</module>
   	<module>MQTTSandbox</module>
+  	<module>WemosMQTTHandler</module>
   </modules>
 </project>

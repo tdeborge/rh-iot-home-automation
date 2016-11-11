@@ -11,7 +11,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class WemosSensorSubscriber implements MqttCallback{
 
-    String topic        = "Wemos/SmartHome/+/movement";
+    String topic        = "Wemos/SmartHome/#";
     String content      = "Message from MqttPublishSample";
     int qos             = 1;
     String broker       = "tcp://localhost:1883";

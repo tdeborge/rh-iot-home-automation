@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (c) 2011, 2016 Eurotech and/or its affiliates
+
+     All rights reserved. This program and the accompanying materials
+     are made available under the terms of the Eclipse Public License v1.0
+     which accompanies this distribution, and is available at
+     http://www.eclipse.org/legal/epl-v10.html
+
+    Contributors:
+      Eurotech
+
+-->
+<MetaData xmlns="http://www.osgi.org/xmlns/metatype/v1.2.0" localization="en_us">
+    <OCD id="com.redhat.iot.sensors.WemosMQTTHandler"
+         name="Wemos - Sensors"
+         description="Wemos-MQTT communications">
+         
+        <Icon resource="OSGI-INF/wemos-iot.png" size="32"/>
+
+        <AD id="subEnabled"
+            name="Subscribe Enabled"
+            type="Boolean"
+            cardinality="0"
+            required="true"
+            default="false"
+            description="Enable MQTT Subscription." />    
+            
+<AD id="BrokerURL" 
+			name="Broker URL" 
+			type="String" 
+			cardinality="0"
+			required="true" 
+			default="tcp://mbpTimDeBorger.local:1883" 
+			description="Broker URL for the connection" />
+<AD id="UserName" 
+			name="User Name" 
+			type="String" 
+			cardinality="0"
+			required="true" 
+			default="admin" 
+			description="Username for the connection" />
+<AD id="Password" 
+			name="Password" 
+			type="Password" 
+			cardinality="0"
+			required="true" 
+			default="admin" 
+			description="Password for the connection" />
+<AD id="clientId" 
+			name="Client ID" 
+			type="String" 
+			cardinality="0"
+			required="true" 
+			default="kura-gw-01" 
+			description="Client ID for MQTT Connection" />
+<AD id="QOS" 
+			name="Quality of Service (0-1-2)" 
+			type="Integer" 
+			cardinality="0"
+			required="true" 
+			default="0" 
+			description="Quality Of Service" />
+<AD id="connectionInterval" 
+			name="Connection Interval" 
+			type="Integer" 
+			cardinality="0"
+			required="true" 
+			default="10000" 
+			description="Time between connection tries in ms" />
+<AD id="cleansession" 
+			name="Clean Session for MQTT" 
+			type="Boolean" 
+			cardinality="0"
+			required="true" 
+			default="true" 
+			description="Startup Session Handling" />
+<AD id="SubscribingTopic" 
+			name="Sub Prefix" 
+			type="String"
+			cardinality="0" 
+			required="true" 
+			default="Wemos.SmartHome" 
+			description="Incoming Topic Prefix." />
+<AD id="PublishingTopic" 
+			name="Pub Prefix" 
+			type="String"
+			cardinality="0" 
+			required="true" 
+			default="Wemos.SmartHome" 
+			description="Outgoing Topic Prefix"/>
+<AD id="smartlight" 
+			name="Enable Smart Light" 
+			type="Boolean" 
+			cardinality="0"
+			required="true" 
+			default="false" 
+			description="Smart Light Data" />
+<AD id="cloudService" 
+			name="Cloud Service PID"
+			description="The service PID of the Cloud Service to use" 
+			type="String"
+			cardinality="1" 
+			required="false" 
+			default="org.eclipse.kura.cloud.CloudService" />
+<AD id="CloudIntegrations" 
+			name="Integrate with Cloud" 
+			type="Boolean" 
+			cardinality="0"
+			required="true" 
+			default="false" 
+			description="Sending the smart messages to the cloud" />
+    </OCD>
+
+    <Designate pid="com.redhat.iot.sensors.WemosMQTTHandler">
+        <Object ocdref="com.redhat.iot.sensors.WemosMQTTHandler"/>
+    </Designate>
+</MetaData>
