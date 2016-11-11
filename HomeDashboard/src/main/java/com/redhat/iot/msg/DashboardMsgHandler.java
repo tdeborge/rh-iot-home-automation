@@ -21,6 +21,7 @@ public class DashboardMsgHandler implements MqttCallback, IMqttActionListener {
     
     private long m_moveTick = 0;
     private long m_lightTime = 0;
+    private long m_darkTime = 0;
     private long m_lightTick = 0;
     private boolean m_lightOn = false;
 
@@ -37,7 +38,9 @@ public class DashboardMsgHandler implements MqttCallback, IMqttActionListener {
     private  MqttConnectOptions connOpts;
     private MemoryPersistence m_persistence = new MemoryPersistence();
     
-    private long m_timeOn = System.currentTimeMillis();;
+    private long m_timeOn = System.currentTimeMillis();
+    private long m_timeOff = System.currentTimeMillis();;
+
 
     public DashboardMsgHandler(HomeDashboard hd) {
         this.hdb = hd;
@@ -57,13 +60,13 @@ public class DashboardMsgHandler implements MqttCallback, IMqttActionListener {
     }
 
     private void printVariables() {
-        s_logger.info("---------------------------------------");
-        s_logger.info("Broker URL: " + m_brokerURL);
-        s_logger.info("Username: " + m_uname);
-        s_logger.info("Password: " + m_pwd);
-        s_logger.info("ClientID: " + m_clientId);
+        s_logger.debug("---------------------------------------");
+        s_logger.debug("Broker URL: " + m_brokerURL);
+        s_logger.debug("Username: " + m_uname);
+        s_logger.debug("Password: " + m_pwd);
+        s_logger.debug("ClientID: " + m_clientId);
         for (int i = 0; i < m_topicList.length; i++) {
-            s_logger.info("Topic: " + m_topicList[i]);
+            s_logger.debug("Topic: " + m_topicList[i]);
         }
     }
 
@@ -72,7 +75,7 @@ public class DashboardMsgHandler implements MqttCallback, IMqttActionListener {
         connOpts.setCleanSession(true);
         connOpts.setUserName(m_uname);
         connOpts.setPassword(m_pwd.toCharArray());
-        s_logger.info("Connecting to broker: " + m_brokerURL);
+        s_logger.debug("Connecting to broker: " + m_brokerURL);
         try {
             m_wemosConnector = new MqttAsyncClient(m_brokerURL, m_clientId, m_persistence);
             m_wemosConnector.connect(connOpts, null, this);
@@ -82,7 +85,7 @@ public class DashboardMsgHandler implements MqttCallback, IMqttActionListener {
             e.printStackTrace();
             System.exit(0);
         }
-//        s_logger.info("tok status: " + tok.isComplete());
+//        s_logger.debug("tok status: " + tok.isComplete());
         m_wemosConnector.setCallback(this);
     }
 
@@ -102,7 +105,7 @@ public class DashboardMsgHandler implements MqttCallback, IMqttActionListener {
 
     @Override
     public void onSuccess(IMqttToken tok) {
-        s_logger.info("Connection Succeeded on " + tok.getClient().getServerURI());
+        s_logger.debug("Connection Succeeded on " + tok.getClient().getServerURI());
         
         try {
             m_wemosConnector.subscribe(m_topicList, m_qosList);
@@ -111,7 +114,7 @@ public class DashboardMsgHandler implements MqttCallback, IMqttActionListener {
             e.printStackTrace();
         }
         hdb.setConnectSuccess();
-        hdb.setTickerValues(m_moveTick,m_lightTime,m_lightTick,m_lightOn);
+        hdb.setTickerValues(m_moveTick,m_lightTime,m_lightTick,m_lightOn, m_darkTime);
     }
 
     @Override
@@ -137,11 +140,12 @@ public class DashboardMsgHandler implements MqttCallback, IMqttActionListener {
 
     @Override
     public void messageArrived(String topic, MqttMessage msg) throws Exception {
-        s_logger.info("Message arrived on topic " + topic + " and value " + msg);
+        s_logger.debug("Message arrived on topic " + topic + " and value " + msg);
         if(topic.endsWith("/light")){
             this.m_lightTick++;
             if(new String(msg.getPayload()).equals("0")){
                 m_lightOn = false;
+                m_timeOff = System.currentTimeMillis();
                 long current = System.currentTimeMillis();
                 long delta = (current - m_timeOn) / 1000;
                 m_lightTime += delta;
@@ -149,6 +153,9 @@ public class DashboardMsgHandler implements MqttCallback, IMqttActionListener {
             else{
                 m_lightOn = true;
                 m_timeOn = System.currentTimeMillis();
+                long current = System.currentTimeMillis();
+                long delta = (current - m_timeOff) / 1000;
+                m_darkTime += delta;
             }
             //calculate the time here between an on an an off message
         }
@@ -156,7 +163,7 @@ public class DashboardMsgHandler implements MqttCallback, IMqttActionListener {
             this.m_moveTick++;
             //calculate the time here between an on an an off message
         }
-        hdb.setTickerValues(m_moveTick,m_lightTime,m_lightTick,m_lightOn);
+        hdb.setTickerValues(m_moveTick,m_lightTime,m_lightTick,m_lightOn,m_darkTime);
     }
     
     private void disconnectMQTT(){
@@ -165,7 +172,7 @@ public class DashboardMsgHandler implements MqttCallback, IMqttActionListener {
             m_wemosConnector.disconnect();
         } catch (MqttException e2) {
             // TODO Auto-generated catch block
-            s_logger.info("Fully disconnected!!!");
+            s_logger.debug("Fully disconnected!!!");
         } finally {
             m_wemosConnector = null;
             connOpts = null;

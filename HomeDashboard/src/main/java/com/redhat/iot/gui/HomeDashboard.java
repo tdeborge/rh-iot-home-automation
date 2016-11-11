@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
+import org.jfree.data.general.DefaultPieDataset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,11 +22,13 @@ public class HomeDashboard {
     private static final Logger s_logger = LoggerFactory.getLogger(HomeDashboard.class);
 
     public static final int WINDOW_WIDTH = 400;
-    public static final int WINDOW_HEIGHT = 600;
+    public static final int WINDOW_HEIGHT = 460;
     
     private JFrame window;
     private JLabel lbConnection, lbvConnection, lbMovement, lbvMovement, lbLight, lbvLight, lbNumSwitches, lbvNumSwitches, lbDuration, lbvDuration;
-
+    private LightStatsPie m_lightPie;
+    
+    
     private static ResourceBundle bundle = null;
 
     public static void main(String[] args) {
@@ -45,8 +48,8 @@ public class HomeDashboard {
     }
 
     private void initialize() {
-        s_logger.info("Starting the application");
-        s_logger.info("Getting the first parameter: " + getString("dashboard.author"));
+        s_logger.debug("Starting the application");
+        s_logger.debug("Getting the first parameter: " + getString("dashboard.author"));
         
         window = new JFrame(getString("dashboard.window.title"));
         //window.setIconImage(new ImageIcon(getClass().getResource(getString("DSCleanerApp.window.icon.image"))).getImage());
@@ -70,6 +73,17 @@ public class HomeDashboard {
         window.add(lbvLight);
         window.add(lbvNumSwitches);
         window.add(lbvDuration);
+       
+        //window.add(m_lightPie);
+        //window.pack();
+        
+        m_lightPie = new LightStatsPie();
+        m_lightPie.getPanel().setPreferredSize(new Dimension(250, 150));
+        m_lightPie.getPanel().setBounds(10,220,250,150);
+        m_lightPie.getPanel().setVisible(true);
+        
+        window.getContentPane().add(m_lightPie.getPanel());
+
         
         addSeparators();
              
@@ -108,6 +122,14 @@ public class HomeDashboard {
         seph4.setOpaque(true);
         window.add(seph4);
         
+        JSeparator seph5 = new JSeparator(SwingConstants.HORIZONTAL);
+        seph5.setBounds(0,385,400,10);
+        seph5.setVisible(true);
+        seph5.setForeground(java.awt.Color.BLUE);
+        seph5.setEnabled(true);
+        seph5.setOpaque(true);
+        window.add(seph5);
+        
         JSeparator sepv = new JSeparator(SwingConstants.VERTICAL);
         sepv.setBounds(270,0,10,600);
         sepv.setVisible(true);
@@ -121,7 +143,7 @@ public class HomeDashboard {
         lbConnection = new JLabel(getString("dashboard.window.label.connection"));
         lbConnection.setForeground(java.awt.Color.black);
         lbConnection.setFont(new Font("Dialog", Font.BOLD, 24));
-        lbConnection.setBounds(15, 530, 265, 25);
+        lbConnection.setBounds(15, 400, 265, 25);
         lbConnection.setHorizontalTextPosition(SwingConstants.LEFT);
         lbConnection.setVisible(true);
         
@@ -159,7 +181,7 @@ public class HomeDashboard {
         lbvConnection = new JLabel();
         lbvConnection.setBackground(java.awt.Color.red);
         lbvConnection.setOpaque(true);
-        lbvConnection.setBounds(315,530,40,25);
+        lbvConnection.setBounds(315,400,40,25);
         lbvConnection.setHorizontalTextPosition(SwingConstants.RIGHT);
         lbvConnection.setVisible(true);
         
@@ -190,7 +212,10 @@ public class HomeDashboard {
         lbvDuration.setFont(new Font("Dialog", Font.BOLD, 24));
         lbvDuration.setBounds(290, 165, 300, 25);
         lbvDuration.setHorizontalTextPosition(SwingConstants.RIGHT);
-        lbvDuration.setVisible(true);        
+        lbvDuration.setVisible(true);   
+        
+//        m_lightPie.setBounds(0, 210, 300, 300);
+//        m_lightPie.setVisible(true);
     }
 
     public static String getString(String key) {
@@ -228,7 +253,7 @@ public class HomeDashboard {
         lbvConnection.validate();
     }
 
-    public void setTickerValues(long moveTick, long lightTime, long lightTick, boolean lightOn) {
+    public void setTickerValues(long moveTick, long lightTime, long lightTick, boolean lightOn, long darkTime) {
         lbvMovement.setText("" + moveTick);
         if(lightOn){
             lbvLight.setText("ON");
@@ -238,6 +263,8 @@ public class HomeDashboard {
         }       
         lbvNumSwitches.setText("" + lightTick);
         lbvDuration.setText("" + lightTime);
+        ((DefaultPieDataset) m_lightPie.getDataset()).setValue("ON", lightTime);
+        ((DefaultPieDataset) m_lightPie.getDataset()).setValue("OFF", darkTime);
         window.validate();
     }
 }
