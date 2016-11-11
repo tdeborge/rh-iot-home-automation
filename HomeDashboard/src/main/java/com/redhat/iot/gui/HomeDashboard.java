@@ -21,7 +21,7 @@ public class HomeDashboard {
     private static final Logger s_logger = LoggerFactory.getLogger(HomeDashboard.class);
 
     public static final int WINDOW_WIDTH = 400;
-    public static final int WINDOW_HEIGHT = 300;
+    public static final int WINDOW_HEIGHT = 600;
     
     private JFrame window;
     private JLabel lbConnection, lbvConnection, lbMovement, lbvMovement, lbLight, lbvLight, lbNumSwitches, lbvNumSwitches, lbDuration, lbvDuration;
@@ -109,7 +109,7 @@ public class HomeDashboard {
         window.add(seph4);
         
         JSeparator sepv = new JSeparator(SwingConstants.VERTICAL);
-        sepv.setBounds(270,0,10,300);
+        sepv.setBounds(270,0,10,600);
         sepv.setVisible(true);
         sepv.setForeground(java.awt.Color.BLUE);
         sepv.setEnabled(true);
@@ -121,7 +121,7 @@ public class HomeDashboard {
         lbConnection = new JLabel(getString("dashboard.window.label.connection"));
         lbConnection.setForeground(java.awt.Color.black);
         lbConnection.setFont(new Font("Dialog", Font.BOLD, 24));
-        lbConnection.setBounds(15, 230, 265, 25);
+        lbConnection.setBounds(15, 530, 265, 25);
         lbConnection.setHorizontalTextPosition(SwingConstants.LEFT);
         lbConnection.setVisible(true);
         
@@ -159,7 +159,7 @@ public class HomeDashboard {
         lbvConnection = new JLabel();
         lbvConnection.setBackground(java.awt.Color.red);
         lbvConnection.setOpaque(true);
-        lbvConnection.setBounds(315,230,40,25);
+        lbvConnection.setBounds(315,530,40,25);
         lbvConnection.setHorizontalTextPosition(SwingConstants.RIGHT);
         lbvConnection.setVisible(true);
         
