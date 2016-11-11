@@ -10,5 +10,6 @@
   	<module>WemosSensors</module>
   	<module>MQTTSandbox</module>
   	<module>WemosMQTTHandler</module>
+  	<module>HomeDashboard</module>
   </modules>
 </project>
