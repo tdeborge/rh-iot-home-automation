@@ -320,9 +320,9 @@ public class WemosMQTTHandler implements ConfigurableComponent, CloudClientListe
  
     @Override
     public void messageArrived(String topic, MqttMessage msg) throws Exception {
-        s_logger.debug("message arrived on Topic: " + topic);
         //Determine the asset and the ID
         String value = new String(msg.getPayload());
+        s_logger.info("message arrived on Topic: " + topic + ": Value: " + value);
         s_logger.debug("The content is: " + msg + "/" + value);
         
         String id = "";
